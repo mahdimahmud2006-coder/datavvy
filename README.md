@@ -105,3 +105,22 @@ python3 scripts/persistence_test.py verify --state /tmp/vms-probe.json
 ```
 
 The verification removes the temporary probe records after confirming they survived restart.
+
+## Hosted deployment (Railway + Netlify)
+
+The backend Dockerfile builds with Java 21 and the committed Gradle wrapper. Tests are run separately against a MySQL database; the image build only packages the executable JAR. The backend reads Railway's `PORT`, falling back to 9001 locally.
+
+1. Create a Railway project with a MySQL service named `MySQL`, then add this GitHub repository as the backend service.
+2. Set the backend Root Directory to `/stark-vms-backend`; Railway detects its Dockerfile.
+3. Set these variables on the backend service (keep database credentials in Railway, never in GitHub or Netlify):
+
+```text
+DB_URL=jdbc:mysql://${{MySQL.MYSQLHOST}}:${{MySQL.MYSQLPORT}}/${{MySQL.MYSQLDATABASE}}
+DB_USER=${{MySQL.MYSQLUSER}}
+DB_PASSWORD=${{MySQL.MYSQLPASSWORD}}
+```
+
+4. Deploy the backend and generate its public domain. Confirm `https://YOUR-BACKEND/api/vehicles` responds successfully.
+5. In Netlify, set `VMS_API_URL=https://YOUR-BACKEND/api` with that actual domain, then redeploy. The committed `netlify.toml` installs the pinned Flutter SDK and publishes `stark_vms/build/web`.
+
+This remains an assignment demonstration without login. Use sample data. Hosting availability and usage charges depend on the account's plan and trial balance.

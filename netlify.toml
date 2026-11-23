@@ -1,0 +1,9 @@
+[build]
+  base = "stark_vms"
+  command = "bash ../scripts/netlify-build.sh"
+  publish = "build/web"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

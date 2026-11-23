@@ -1,0 +1,26 @@
+# Generated build output and dependencies
+**/build/
+**/.gradle/
+**/.dart_tool/
+**/node_modules/
+**/.flutter-plugins-dependencies
+**/ephemeral/
+**/__pycache__/
+
+# Local machine settings and credentials
+.env
+.env.*
+!.env.example
+**/local.properties
+**/Generated.xcconfig
+**/flutter_export_environment.sh
+**/.idea/
+**/.vscode/
+*.iml
+.DS_Store
+
+# Runtime files and test artifacts
+*.log
+**/vms-uploads/
+validation/
+*.zip
